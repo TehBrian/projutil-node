@@ -1,0 +1,33 @@
+{
+  "name": "projutil",
+  "version": "0.1.0",
+  "description": "A CLI tool which generates and updates projects from templates.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TehBrian/projutil.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "TehBrian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TehBrian/projutil/issues"
+  },
+  "homepage": "https://github.com/TehBrian/projutil#readme",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^8.0.0",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "@types/node": "^16.4.1"
+  }
+}
