@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "description": "A CLI tool which generates and updates projects from templates.",
   "main": "index.js",
+  "bin": {
+    "projutil": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node src/index.js",
+    "start": "npm run build && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
