@@ -17,7 +17,7 @@ export abstract class Resource {
     copyFiles(destination: string) {
         try {
             fs.copySync(this.getFolder(), destination);
-            console.debug(chalk.green("Successfully generated files!"));
+            console.debug(`Copied files from ${this.getFolder()} to ${destination}`);
         } catch (err) {
             console.error(err);
         }

@@ -25,6 +25,7 @@ export function concatDir(
     }
 }
 
+// TODO: clean this up
 export function renameFolder(root: string, from: string, to: string) {
     const splitFrom: string[] = from.split("/").filter((e) => e);
     const splitTo: string[] = to.split("/").filter((e) => e);
@@ -61,8 +62,12 @@ export function replaceTokens(directory: string, from: string, to: string) {
             from: new RegExp("@" + from + "@", "g"),
             to: to,
         });
+        console.debug(`Successfully replaced token ${from} to ${to}.`);
     } catch (error) {
-        console.error("An error occurred when trying to replace tokens:", error);
+        console.error(
+            "An error occurred when trying to replace a token:",
+            error
+        );
     }
 }
 
@@ -80,13 +85,9 @@ export function replaceTokensMap(
         replaceTokens(directory, from, to);
     }
     console.debug(
-        chalk.green(
-            "Successfully replaced tokens: " +
-                util.inspect(replacements, {
-                    showHidden: false,
-                    depth: null,
-                }) +
-                "!"
-        )
+        `Successfully replaced tokens: ${util.inspect(replacements, {
+            showHidden: false,
+            depth: null,
+        })}!`
     );
 }
