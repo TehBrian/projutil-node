@@ -51,6 +51,7 @@ export class JavaPaperPlugin extends Template {
                 type: "text",
                 name: "projectGroup",
                 message: "What's the project group?",
+                format: (val: string) => val.toLowerCase(),
             },
             {
                 type: "text",
