@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
+    "install-global": "npm run build && npm install -g ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
