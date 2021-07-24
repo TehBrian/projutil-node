@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { injectCustomLogging as injectCustomLogging } from "./logging";
 import { fragments, registerDefaultFragments } from "./resource/fragments";
 import { templates, registerDefaultTemplates } from "./resource/templates";
 
@@ -8,6 +9,20 @@ const program = require("commander");
 
 registerDefaultTemplates();
 registerDefaultFragments();
+
+injectCustomLogging();
+
+process.on("SIGINT", function () {
+    console.log(
+        chalk.red("Looks like our time is getting cut short, my friend.")
+    );
+
+    process.exit();
+});
+
+process.on("exit", function () {
+    console.debug(chalk.magenta("Until next time! <3"));
+});
 
 program.version("1.0.0");
 
