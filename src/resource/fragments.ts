@@ -63,9 +63,9 @@ export class Checkstyle extends Fragment {
     }
 
     prompt(options: ResourceOptions) {
-        async () => {
+        (async () => {
             this.copyFiles(options.directory);
-        };
+        })();
     }
 }
 
@@ -75,8 +75,8 @@ export class Editorconfig extends Fragment {
     }
 
     prompt(options: ResourceOptions) {
-        async () => {
+        (async () => {
             this.copyFiles(options.directory);
-        };
+        })();
     }
 }
