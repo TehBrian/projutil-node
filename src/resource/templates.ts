@@ -1,3 +1,4 @@
+import { onCancel } from "..";
 import { templatesFolder } from "../files";
 import { concatDir, renameFolder, replaceTokensMap } from "../fileutil";
 import { fragments } from "./fragments";
@@ -92,7 +93,7 @@ export class JavaPaperPlugin extends Template {
         ];
 
         (async () => {
-            const response = await prompts(questions);
+            const response = await prompts(questions, { onCancel });
 
             const projectPackage: string =
                 response.projectGroup +

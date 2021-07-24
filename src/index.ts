@@ -12,13 +12,15 @@ registerDefaultFragments();
 
 injectCustomLogging();
 
-process.on("SIGINT", function () {
+export const onCancel = () => {
     console.log(
         chalk.red("Looks like our time is getting cut short, my friend.")
     );
 
-    process.exit();
-});
+    process.exit(0);
+};
+
+process.on("SIGINT", onCancel);
 
 process.on("exit", function () {
     console.debug(chalk.magenta("Until next time! <3"));

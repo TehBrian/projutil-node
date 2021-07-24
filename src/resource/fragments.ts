@@ -1,3 +1,4 @@
+import { onCancel } from "..";
 import { fragmentsFolder } from "../files";
 import { concatDir, replaceTokensMap } from "../fileutil";
 import { Resource, ResourceOptions } from "./resources";
@@ -43,7 +44,7 @@ export class MitLicense extends Fragment {
         ];
 
         (async () => {
-            const response = await prompts(questions);
+            const response = await prompts(questions, { onCancel })
 
             this.copyFiles(options.directory);
 
