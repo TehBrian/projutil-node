@@ -1,9 +1,9 @@
 import { templatesFolder } from "../files";
+import { concatDir, renameFolder, replaceTokensMap } from "../fileutil";
 import { fragments } from "./fragments";
 import { Resource, ResourceOptions } from "./resources";
 
 const prompts = require("prompts");
-var _ = require("lodash");
 
 export const templates: Map<string, Template> = new Map();
 
@@ -23,7 +23,7 @@ export abstract class Template extends Resource {
     abstract prompt(options: TemplateOptions): void;
 
     getFolder() {
-        return templatesFolder + "/" + this.file;
+        return concatDir(templatesFolder, this.file);
     }
 }
 
@@ -94,11 +94,13 @@ export class JavaPaperPlugin extends Template {
             const response = await prompts(questions);
 
             const projectPackage: string =
-                response.projectGroup + "." + response.projectName.toLowerCase();
+                response.projectGroup +
+                "." +
+                response.projectName.toLowerCase();
 
             this.copyFiles(options.directory);
 
-            this.replaceTokensMap(
+            replaceTokensMap(
                 options.directory,
                 new Map([
                     ["PROJECT_NAME", response.projectName],
@@ -113,6 +115,34 @@ export class JavaPaperPlugin extends Template {
 
             fragments.get("Editorconfig")?.prompt(options);
             fragments.get("Checkstyle")?.prompt(options);
+
+            /*
+            fs.renameSync(
+                options.directory + "/src/main/java/#PROJECT_PACKAGE#/",
+                options.directory +
+                    "/src/main/java/" +
+                    projectPackage.replaceAll(/\./g, "/")
+            );
+            fs.renameSync(
+                options.directory +
+                    "/src/main/java/" +
+                    projectPackage +
+                    "/#PROJECT_NAME#",
+                options.directory +
+                    "/src/main/java/" +
+                    projectPackage +
+                    "/" +
+                    response.projectName
+            );
+            */
+
+            renameFolder(
+                options.directory,
+                "src/main/java/#PROJECT_PACKAGE#/",
+                "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
+            );
+
+            //this.moveFile(options.directory, "src/main/java")
 
             if (response.license) {
                 fragments.get("MitLicense")?.prompt(options);

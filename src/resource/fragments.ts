@@ -1,4 +1,5 @@
 import { fragmentsFolder } from "../files";
+import { concatDir, replaceTokensMap } from "../fileutil";
 import { Resource, ResourceOptions } from "./resources";
 
 const prompts = require("prompts");
@@ -23,7 +24,7 @@ export abstract class Fragment extends Resource {
     abstract prompt(options: ResourceOptions): void;
 
     getFolder() {
-        return fragmentsFolder + "/" + this.file;
+        return concatDir(fragmentsFolder, this.file);
     }
 }
 
@@ -46,7 +47,7 @@ export class MitLicense extends Fragment {
 
             this.copyFiles(options.directory);
 
-            this.replaceTokensMap(
+            replaceTokensMap(
                 options.directory,
                 new Map([
                     ["LICENSE_YEAR", new Date().getFullYear().toString()],

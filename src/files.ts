@@ -1,5 +1,7 @@
-export const resourcesFolder: string = __dirname + "/../resources";
+import { concatDir } from "./fileutil";
 
-export const templatesFolder: string = resourcesFolder + "/templates";
+export const resourcesFolder: string = concatDir(__dirname, "/../resources");
 
-export const fragmentsFolder: string = resourcesFolder + "/fragments";
+export const templatesFolder: string = concatDir(resourcesFolder, "/templates");
+
+export const fragmentsFolder: string = concatDir(resourcesFolder, "/fragments");
