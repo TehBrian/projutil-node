@@ -1,0 +1,8 @@
+name: @PROJECT_NAME@
+description: @PROJECT_DESCRIPTION@
+authors: [ @PROJECT_AUTHOR@ ]
+website: @PROJECT_WEBSITE@
+
+version: ${version}
+main: @PROJECT_PACKAGE@.@PROJECT_NAME@
+api-version: 1.17
