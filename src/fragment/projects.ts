@@ -1,5 +1,10 @@
 import { onCancel } from "..";
-import { renameFolder, replaceTokensMap } from "../fileutil";
+import {
+    concatDir,
+    renameFile,
+    renameFolder,
+    replaceTokensMap,
+} from "../fileutil";
 import { FileFragment, FragmentOptions, fragments } from "./fragment";
 
 const prompts = require("prompts");
@@ -81,6 +86,12 @@ export class JavaPaperPlugin extends FileFragment {
                 ])
             );
 
+            renameFile(
+                concatDir(options.directory, "src/main/java/#PROJECT_PACKAGE#"),
+                "#PROJECT_NAME#.java",
+                response.projectName + ".java"
+            );
+
             renameFolder(
                 options.directory,
                 "src/main/java/#PROJECT_PACKAGE#/",
@@ -93,26 +104,6 @@ export class JavaPaperPlugin extends FileFragment {
             if (response.license) {
                 fragments.get("License")?.prompt(options);
             }
-
-            /*
-            fs.renameSync(
-                options.directory + "/src/main/java/#PROJECT_PACKAGE#/",
-                options.directory +
-                    "/src/main/java/" +
-                    projectPackage.replaceAll(/\./g, "/")
-            );
-            fs.renameSync(
-                options.directory +
-                    "/src/main/java/" +
-                    projectPackage +
-                    "/#PROJECT_NAME#",
-                options.directory +
-                    "/src/main/java/" +
-                    projectPackage +
-                    "/" +
-                    response.projectName
-            );
-            */
 
             //this.moveFile(options.directory, "src/main/java")
         })();

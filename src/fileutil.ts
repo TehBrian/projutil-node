@@ -48,6 +48,10 @@ export function renameFolder(root: string, from: string, to: string) {
     );
 }
 
+export function renameFile(directory: string, from: string, to: string) {
+    fs.renameSync(concatDir(directory, from), concatDir(directory, to));
+}
+
 /**
  * Searches all files in a directory for instances of a token and
  * replaces it with a string.
