@@ -1,38 +1,10 @@
 import { onCancel } from "..";
-import { templatesFolder } from "../files";
-import { concatDir, renameFolder, replaceTokensMap } from "../fileutil";
-import { fragments } from "./fragments";
-import { Resource, ResourceOptions } from "./resources";
+import { renameFolder, replaceTokensMap } from "../fileutil";
+import { Fragment, FragmentOptions, fragments } from "./fragment";
 
 const prompts = require("prompts");
 
-export const templates: Map<string, Template> = new Map();
-
-export function registerTemplate(template: Template): void {
-    templates.set(template.name, template);
-}
-
-export function registerDefaultTemplates(): void {
-    registerTemplate(new JavaPaperPlugin());
-}
-
-export abstract class Template extends Resource {
-    constructor(name: string, file: string, description: string) {
-        super(name, file, description);
-    }
-
-    abstract prompt(options: TemplateOptions): void;
-
-    getFolder() {
-        return concatDir(templatesFolder, this.file);
-    }
-}
-
-export type TemplateOptions = ResourceOptions & {
-    overwrite: boolean;
-};
-
-export class JavaPaperPlugin extends Template {
+export class JavaPaperPlugin extends Fragment {
     constructor() {
         super(
             "JavaPaperPlugin",
@@ -41,7 +13,7 @@ export class JavaPaperPlugin extends Template {
         );
     }
 
-    prompt(options: TemplateOptions) {
+    prompt(options: FragmentOptions) {
         const questions = [
             {
                 type: "text",

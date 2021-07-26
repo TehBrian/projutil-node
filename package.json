@@ -1,7 +1,7 @@
 {
   "name": "projutil",
   "version": "0.1.0",
-  "description": "A CLI tool which generates and updates projects from templates.",
+  "description": "A CLI tool which generates and updates project files.",
   "main": "index.js",
   "bin": {
     "projutil": "dist/index.js"
