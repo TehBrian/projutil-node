@@ -1,7 +1,9 @@
 import { onCancel } from "..";
 import {
     concatDir,
-    renameFile,
+    dirStringToArray,
+    moveFile,
+    packageToDirectory,
     renameFolder,
     replaceTokensMap,
 } from "../fileutil";
@@ -68,6 +70,10 @@ export class JavaPaperPlugin extends FileFragment {
         const projectPackage: string =
             response.projectGroup + "." + response.projectName.toLowerCase();
 
+        const packageAsDirectory: string = packageToDirectory(projectPackage);
+
+        const mainClassName: string = response.projectName + ".java";
+
         this.copyFiles(options.directory);
 
         replaceTokensMap(
@@ -83,16 +89,20 @@ export class JavaPaperPlugin extends FileFragment {
             ])
         );
 
-        renameFile(
-            concatDir(options.directory, "src/main/java/#PROJECT_PACKAGE#"),
-            "#PROJECT_NAME#.java",
-            response.projectName + ".java"
+        renameFolder(
+            concatDir(options.directory, "src/main/java"),
+            "#PROJECT_PACKAGE#/",
+            packageAsDirectory
         );
 
-        renameFolder(
-            options.directory,
-            "src/main/java/#PROJECT_PACKAGE#/",
-            "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
+        moveFile(
+            concatDir(options.directory, "src/main/java"),
+            // TODO: make renameFolder move files appropriately
+            concatDir(
+                dirStringToArray(packageAsDirectory)[0],
+                "#PROJECT_NAME#.java"
+            ),
+            concatDir(packageAsDirectory, mainClassName)
         );
 
         await fragments.get("Editorconfig")?.prompt(options);
@@ -101,7 +111,5 @@ export class JavaPaperPlugin extends FileFragment {
         if (response.license) {
             await fragments.get("License")?.prompt(options);
         }
-
-        //this.moveFile(options.directory, "src/main/java")
     }
 }

@@ -1,29 +1,31 @@
 const replace = require("replace-in-file");
 const fs = require("fs-extra");
-const chalk = require("chalk");
 const util = require("util");
 
-export function concatDir(
-    dir1: string | string[],
-    dir2: string | string[]
-): string {
+export function concatDir(...dir: (string | string[])[]): string {
+    var allDirs: string[] = [];
+
+    for (const item of dir) {
+        // make every argument an array
+        const arrayDir: string[] =
+            typeof item === "string" ? dirStringToArray(item) : item;
+        allDirs = allDirs.concat(arrayDir);
+    }
+
     const preserveRootSlash: boolean =
-        typeof dir1 === "string" && dir1.charAt(0) === "/";
-
-    const splitDir1 = typeof dir1 === "string" ? dir1.split("/") : dir1;
-    const splitDir2 = typeof dir2 === "string" ? dir2.split("/") : dir2;
-
-    const concatenatedDirs: string = splitDir1
-        .filter((e) => e)
-        .concat(splitDir2.filter((e) => e))
-        .join("/");
+        typeof dir[0] === "string" && dir[0].charAt(0) === "/";
 
     if (preserveRootSlash) {
-        return "/" + concatenatedDirs;
+        return "/" + dirArrayToString(allDirs);
     } else {
-        return concatenatedDirs;
+        return dirArrayToString(allDirs);
     }
 }
+
+export const dirStringToArray = (dir: string): string[] =>
+    dir.split("/").filter((e) => e);
+export const dirArrayToString = (dir: string[]): string =>
+    dir.filter((e) => e).join("/");
 
 // TODO: clean this up
 export function renameFolder(root: string, from: string, to: string) {
@@ -42,14 +44,13 @@ export function renameFolder(root: string, from: string, to: string) {
 
     fs.renameSync(concatDir(root, from), concatDir(root, actualPlainRenameTo));
 
-    fs.mkdirSync(
-        concatDir(root, concatDir(actualPlainRenameTo, directoriesToCreate)),
-        { recursive: true }
-    );
+    fs.mkdirSync(concatDir(root, actualPlainRenameTo, directoriesToCreate), {
+        recursive: true,
+    });
 }
 
-export function renameFile(directory: string, from: string, to: string) {
-    fs.renameSync(concatDir(directory, from), concatDir(directory, to));
+export function moveFile(root: string, from: string, to: string) {
+    fs.renameSync(concatDir(root, from), concatDir(root, to));
 }
 
 /**
@@ -95,3 +96,6 @@ export function replaceTokensMap(
         })}!`
     );
 }
+
+export const packageToDirectory = (s: string) => s.replaceAll(/\./g, "/");
+export const directoryToPackage = (s: string) => s.replaceAll(/\//g, ".");
