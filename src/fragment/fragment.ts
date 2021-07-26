@@ -47,5 +47,4 @@ export abstract class FileFragment extends Fragment {
 
 export type FragmentOptions = {
     directory: string;
-    overwrite: boolean;
 };

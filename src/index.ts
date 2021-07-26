@@ -39,13 +39,11 @@ program.version("1.0.0");
 program
     .command("trace <fragment>")
     .description("copy files from a fragment and replace/rename as needed")
-    .option("-o, --overwrite", "overwrite (will delete!) all old files")
     .option(
         "-d, --directory <dir>",
         "specify project directory (defaults to current)"
     )
     .action(function (fragment: string, options: any) {
-        const overwrite: boolean = options.overwrite;
         const directory: string =
             options.directory === undefined ? process.cwd() : options.directory;
 
@@ -56,7 +54,7 @@ program
             return;
         }
 
-        theFragment.prompt({ overwrite, directory });
+        theFragment.prompt({ directory });
     });
 
 program
