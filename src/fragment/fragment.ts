@@ -11,13 +11,22 @@ export function registerFragment(fragment: Fragment): void {
 
 export abstract class Fragment {
     name: string;
-    file: string;
     description: string;
 
-    constructor(name: string, file: string, description: string) {
+    constructor(name: string, description: string) {
         this.name = name;
-        this.file = file;
         this.description = description;
+    }
+
+    abstract prompt(options: FragmentOptions): void;
+}
+
+export abstract class FileFragment extends Fragment {
+    file: string;
+
+    constructor(name: string, description: string, file: string) {
+        super(name, description);
+        this.file = file;
     }
 
     getFolder() {
@@ -34,8 +43,6 @@ export abstract class Fragment {
             console.error(err);
         }
     }
-
-    abstract prompt(options: FragmentOptions): void;
 }
 
 export type FragmentOptions = {

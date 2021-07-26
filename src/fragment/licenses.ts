@@ -1,12 +1,37 @@
 import { onCancel } from "..";
 import { replaceTokensMap } from "../fileutil";
-import { Fragment, FragmentOptions } from "./fragment";
+import { FileFragment, Fragment, FragmentOptions, fragments } from "./fragment";
 
 const prompts = require("prompts");
 
-export class MitLicense extends Fragment {
+export class License extends Fragment {
     constructor() {
-        super("MitLicense", "mit_license", "The MIT license.");
+        super("License", "A list of licenses.");
+    }
+
+    prompt(options: FragmentOptions) {
+        const questions = [
+            {
+                type: "select",
+                name: "licenseType",
+                message: "What license would you like to use?",
+                choices: [{ title: "MIT", value: "MIT" }],
+            },
+        ];
+
+        (async () => {
+            const response = await prompts(questions, { onCancel });
+
+            if (response.licenseType === "MIT") {
+                fragments.get("MitLicense")!.prompt(options);
+            }
+        })();
+    }
+}
+
+export class MitLicense extends FileFragment {
+    constructor() {
+        super("MitLicense", "The MIT license.", "mit_license");
     }
 
     prompt(options: FragmentOptions) {

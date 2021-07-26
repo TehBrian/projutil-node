@@ -1,15 +1,15 @@
 import { onCancel } from "..";
 import { renameFolder, replaceTokensMap } from "../fileutil";
-import { Fragment, FragmentOptions, fragments } from "./fragment";
+import { FileFragment, FragmentOptions, fragments } from "./fragment";
 
 const prompts = require("prompts");
 
-export class JavaPaperPlugin extends Fragment {
+export class JavaPaperPlugin extends FileFragment {
     constructor() {
         super(
             "JavaPaperPlugin",
-            "java_paper_plugin",
-            "A blank Gradle project, using the Kotlin DSL, configured for Paper plugin development."
+            "A blank Gradle project, using the Kotlin DSL, configured for Paper plugin development.",
+            "java_paper_plugin"
         );
     }
 
@@ -56,12 +56,6 @@ export class JavaPaperPlugin extends Fragment {
                 active: "yes",
                 inactive: "no",
             },
-            {
-                type: (prev: boolean) => (prev ? "select" : null),
-                name: "licenseType",
-                message: "What license would you like to use?",
-                choices: [{ title: "MIT" }],
-            },
         ];
 
         (async () => {
@@ -87,8 +81,18 @@ export class JavaPaperPlugin extends Fragment {
                 ])
             );
 
+            renameFolder(
+                options.directory,
+                "src/main/java/#PROJECT_PACKAGE#/",
+                "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
+            );
+
             fragments.get("Editorconfig")?.prompt(options);
             fragments.get("Checkstyle")?.prompt(options);
+
+            if (response.license) {
+                fragments.get("License")?.prompt(options);
+            }
 
             /*
             fs.renameSync(
@@ -110,17 +114,7 @@ export class JavaPaperPlugin extends Fragment {
             );
             */
 
-            renameFolder(
-                options.directory,
-                "src/main/java/#PROJECT_PACKAGE#/",
-                "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
-            );
-
             //this.moveFile(options.directory, "src/main/java")
-
-            if (response.license) {
-                fragments.get("MitLicense")?.prompt(options);
-            }
         })();
     }
 }
