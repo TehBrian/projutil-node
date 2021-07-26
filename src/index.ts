@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { injectCustomLogging as injectCustomLogging } from "./logging";
-import { fragments, registerFragment } from "./fragment/fragment";
+import { Fragment, fragments, registerFragment } from "./fragment/fragment";
 import { License, MitLicense } from "./fragment/licenses";
 import { JavaPaperPlugin } from "./fragment/projects";
 import { Checkstyle, Editorconfig } from "./fragment/extras";
@@ -37,24 +37,37 @@ process.on("exit", function () {
 program.version("1.0.0");
 
 program
-    .command("trace <fragment>")
-    .description("copy files from a fragment and replace/rename as needed")
+    .command("trace <fragment...>")
+    .description(
+        "copy files from one or more fragments and replace/rename as needed"
+    )
     .option(
         "-d, --directory <dir>",
         "specify project directory (defaults to current)"
     )
-    .action(function (fragment: string, options: any) {
+    .action(async function (fragment: string[], options: any): Promise<void> {
         const directory: string =
             options.directory === undefined ? process.cwd() : options.directory;
 
-        const theFragment = fragments.get(fragment);
-        if (theFragment === undefined) {
-            console.error(chalk.red("That fragment doesn't exist."));
-            printAvailableFragments();
-            return;
+        // verify that all fragments are there
+        var fragmentsToRegister: Fragment[] = [];
+        for (const item of fragment) {
+            const fragmentObject = fragments.get(item);
+            if (fragmentObject === undefined) {
+                console.error(chalk.red(`The fragment ${item} doesn't exist.`));
+                printAvailableFragments();
+                return;
+            }
+            fragmentsToRegister.push(fragmentObject);
         }
 
-        theFragment.prompt({ directory });
+        // prompt each fragment in order
+        for (const fragmentObject of fragmentsToRegister) {
+            await fragmentObject.prompt({ directory });
+            console.log(chalk.green(`Traced fragment ${fragmentObject.name}!`));
+        }
+
+        console.log(chalk.blue("All done :)"));
     });
 
 program

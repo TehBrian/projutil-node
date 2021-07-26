@@ -18,7 +18,7 @@ export class JavaPaperPlugin extends FileFragment {
         );
     }
 
-    prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions) {
         const questions = [
             {
                 type: "text",
@@ -63,49 +63,45 @@ export class JavaPaperPlugin extends FileFragment {
             },
         ];
 
-        (async () => {
-            const response = await prompts(questions, { onCancel });
+        const response = await prompts(questions, { onCancel });
 
-            const projectPackage: string =
-                response.projectGroup +
-                "." +
-                response.projectName.toLowerCase();
+        const projectPackage: string =
+            response.projectGroup + "." + response.projectName.toLowerCase();
 
-            this.copyFiles(options.directory);
+        this.copyFiles(options.directory);
 
-            replaceTokensMap(
-                options.directory,
-                new Map([
-                    ["PROJECT_NAME", response.projectName],
-                    ["PROJECT_GROUP", response.projectGroup],
-                    ["PROJECT_VERSION", response.projectVersion],
-                    ["PROJECT_DESCRIPTION", response.projectDescription],
-                    ["PROJECT_AUTHOR", response.projectAuthor],
-                    ["PROJECT_WEBSITE", response.projectWebsite],
-                    ["PROJECT_PACKAGE", projectPackage],
-                ])
-            );
+        replaceTokensMap(
+            options.directory,
+            new Map([
+                ["PROJECT_NAME", response.projectName],
+                ["PROJECT_GROUP", response.projectGroup],
+                ["PROJECT_VERSION", response.projectVersion],
+                ["PROJECT_DESCRIPTION", response.projectDescription],
+                ["PROJECT_AUTHOR", response.projectAuthor],
+                ["PROJECT_WEBSITE", response.projectWebsite],
+                ["PROJECT_PACKAGE", projectPackage],
+            ])
+        );
 
-            renameFile(
-                concatDir(options.directory, "src/main/java/#PROJECT_PACKAGE#"),
-                "#PROJECT_NAME#.java",
-                response.projectName + ".java"
-            );
+        renameFile(
+            concatDir(options.directory, "src/main/java/#PROJECT_PACKAGE#"),
+            "#PROJECT_NAME#.java",
+            response.projectName + ".java"
+        );
 
-            renameFolder(
-                options.directory,
-                "src/main/java/#PROJECT_PACKAGE#/",
-                "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
-            );
+        renameFolder(
+            options.directory,
+            "src/main/java/#PROJECT_PACKAGE#/",
+            "src/main/java/" + projectPackage.replaceAll(/\./g, "/")
+        );
 
-            fragments.get("Editorconfig")?.prompt(options);
-            fragments.get("Checkstyle")?.prompt(options);
+        await fragments.get("Editorconfig")?.prompt(options);
+        await fragments.get("Checkstyle")?.prompt(options);
 
-            if (response.license) {
-                fragments.get("License")?.prompt(options);
-            }
+        if (response.license) {
+            await fragments.get("License")?.prompt(options);
+        }
 
-            //this.moveFile(options.directory, "src/main/java")
-        })();
+        //this.moveFile(options.directory, "src/main/java")
     }
 }

@@ -18,7 +18,7 @@ export abstract class Fragment {
         this.description = description;
     }
 
-    abstract prompt(options: FragmentOptions): void;
+    abstract prompt(options: FragmentOptions): Promise<void>;
 }
 
 export abstract class FileFragment extends Fragment {

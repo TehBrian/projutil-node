@@ -9,7 +9,7 @@ export class License extends Fragment {
         super("License", "A list of licenses.");
     }
 
-    prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions) {
         const questions = [
             {
                 type: "select",
@@ -19,13 +19,11 @@ export class License extends Fragment {
             },
         ];
 
-        (async () => {
-            const response = await prompts(questions, { onCancel });
+        const response = await prompts(questions, { onCancel });
 
-            if (response.licenseType === "MIT") {
-                fragments.get("MitLicense")!.prompt(options);
-            }
-        })();
+        if (response.licenseType === "MIT") {
+            await fragments.get("MitLicense")!.prompt(options);
+        }
     }
 }
 
@@ -34,7 +32,7 @@ export class MitLicense extends FileFragment {
         super("MitLicense", "The MIT license.", "mit_license");
     }
 
-    prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions) {
         const questions = [
             {
                 type: "text",
@@ -43,18 +41,16 @@ export class MitLicense extends FileFragment {
             },
         ];
 
-        (async () => {
-            const response = await prompts(questions, { onCancel });
+        const response = await prompts(questions, { onCancel });
 
-            this.copyFiles(options.directory);
+        this.copyFiles(options.directory);
 
-            replaceTokensMap(
-                options.directory,
-                new Map([
-                    ["LICENSE_YEAR", new Date().getFullYear().toString()],
-                    ["LICENSE_HOLDER", response.licenseHolder],
-                ])
-            );
-        })();
+        replaceTokensMap(
+            options.directory,
+            new Map([
+                ["LICENSE_YEAR", new Date().getFullYear().toString()],
+                ["LICENSE_HOLDER", response.licenseHolder],
+            ])
+        );
     }
 }
