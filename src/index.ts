@@ -3,8 +3,7 @@
 import { injectCustomLogging as injectCustomLogging } from "./logging";
 import { Fragment, fragments, registerFragment } from "./fragment/fragment";
 import { License, MitLicense } from "./fragment/licenses";
-import { JavaPaperPlugin } from "./fragment/projects";
-import { Checkstyle, Editorconfig } from "./fragment/extras";
+import { Checkstyle, Editorconfig, JavaGitignore } from "./fragment/extras";
 
 const chalk = require("chalk");
 const program = require("commander");
@@ -13,6 +12,7 @@ export function registerDefaultFragments(): void {
     registerFragment(new JavaPaperPlugin());
     registerFragment(new License());
     registerFragment(new MitLicense());
+    registerFragment(new JavaGitignore());
     registerFragment(new Checkstyle());
     registerFragment(new Editorconfig());
 }

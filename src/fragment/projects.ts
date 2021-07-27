@@ -108,6 +108,7 @@ export class JavaPaperPlugin extends FileFragment {
 
         await fragments.get("Editorconfig")?.prompt(options);
         await fragments.get("Checkstyle")?.prompt(options);
+        await fragments.get("JavaGitignore")?.prompt(options);
 
         if (response.license) {
             await fragments.get("License")?.prompt(options);

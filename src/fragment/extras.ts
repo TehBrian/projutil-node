@@ -19,3 +19,13 @@ export class Editorconfig extends FileFragment {
         this.copyFiles(options.directory);
     }
 }
+
+export class JavaGitignore extends FileFragment {
+    constructor() {
+        super("JavaGitignore", "A nice gitignore for Java.", "java_gitignore");
+    }
+
+    async prompt(options: FragmentOptions) {
+        this.copyFiles(options.directory);
+    }
+}
