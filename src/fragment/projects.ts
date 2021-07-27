@@ -66,19 +66,16 @@ export class JavaPaperPlugin extends FileFragment {
 
         const response = await prompts(questions, { onCancel });
 
-        const projectPackage: string =
-            response.projectGroup + "." + response.projectName.toLowerCase();
-
-        const packageAsDirectory: string = packageToDirectory(projectPackage);
-
-        const mainClassName: string = response.projectName + ".java";
-
         this.copyFiles(options.directory);
+
+        const rootProjectName: string = response.projectName.toLowerCase();
+        const projectPackage: string =
+            response.projectGroup + "." + rootProjectName;
 
         replaceTokensMap(
             options.directory,
             new Map([
-                ["ROOT_PROJECT_NAME", response.projectName.toLowerCase()],
+                ["ROOT_PROJECT_NAME", rootProjectName],
                 ["PROJECT_NAME", response.projectName],
                 ["PROJECT_GROUP", response.projectGroup],
                 ["PROJECT_VERSION", response.projectVersion],
@@ -89,9 +86,12 @@ export class JavaPaperPlugin extends FileFragment {
             ])
         );
 
+        const packageAsDirectory: string = packageToDirectory(projectPackage);
+        const mainClassName: string = response.projectName + ".java";
+
         renameFolder(
             concatDir(options.directory, "src/main/java"),
-            "#PROJECT_PACKAGE#/",
+            "#PROJECT_PACKAGE#",
             packageAsDirectory
         );
 

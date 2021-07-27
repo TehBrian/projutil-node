@@ -15,7 +15,7 @@ export function concatDir(...dir: (string | string[])[]): string {
     return dirArrayToString(allDirs);
 }
 
-export const dirStringToArray = (dir: string): string[] => {
+export function dirStringToArray(dir: string): string[] {
     const dirAsArray: string[] = dir.split("/").filter((e) => e);
 
     // preserve root slash
@@ -24,9 +24,9 @@ export const dirStringToArray = (dir: string): string[] => {
     }
 
     return dirAsArray;
-};
+}
 
-export const dirArrayToString = (dir: string[]): string => {
+export function dirArrayToString(dir: string[]): string {
     const dirAsString = dir.filter((e) => e).join("/");
 
     // remove double root slash due to .join
@@ -35,7 +35,7 @@ export const dirArrayToString = (dir: string[]): string => {
     }
 
     return dirAsString;
-};
+}
 
 export function renameFolder(root: string, from: string, to: string) {
     const rootedFrom: string = concatDir(root, from);
