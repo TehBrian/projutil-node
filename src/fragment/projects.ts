@@ -79,6 +79,7 @@ export class JavaPaperPlugin extends FileFragment {
         replaceTokensMap(
             options.directory,
             new Map([
+                ["ROOT_PROJECT_NAME", response.projectName.toLowerCase()],
                 ["PROJECT_NAME", response.projectName],
                 ["PROJECT_GROUP", response.projectGroup],
                 ["PROJECT_VERSION", response.projectVersion],

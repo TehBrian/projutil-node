@@ -1,1 +1,1 @@
-rootProject.name = "@PROJECT_NAME@"
+rootProject.name = "@ROOT_PROJECT_NAME@"
