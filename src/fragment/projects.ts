@@ -1,7 +1,6 @@
 import { onCancel } from "..";
 import {
     concatDir,
-    dirStringToArray,
     moveFile,
     packageToDirectory,
     renameFolder,
@@ -97,13 +96,9 @@ export class JavaPaperPlugin extends FileFragment {
         );
 
         moveFile(
-            concatDir(options.directory, "src/main/java"),
-            // TODO: make renameFolder move files appropriately
-            concatDir(
-                dirStringToArray(packageAsDirectory)[0],
-                "#PROJECT_NAME#.java"
-            ),
-            concatDir(packageAsDirectory, mainClassName)
+            concatDir(options.directory, "src/main/java", packageAsDirectory),
+            "#PROJECT_NAME#.java",
+            mainClassName
         );
 
         await fragments.get("Editorconfig")?.prompt(options);

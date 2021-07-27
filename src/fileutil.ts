@@ -37,17 +37,15 @@ export const dirArrayToString = (dir: string[]): string => {
     return dirAsString;
 }
 
-    const plainRenameTo: string[] = [...splitFrom];
-    plainRenameTo.splice(-1, 1); /*remove last item*/
-    const actualPlainRenameTo = concatDir(plainRenameTo, toYknow[0]);
-    const directoriesToCreate = [...splitTo];
-    directoriesToCreate.splice(0, fromDirectoryCount);
+export function renameFolder(root: string, from: string, to: string) {
+    const rootedFrom: string = concatDir(root, from);
+    const rootedTo: string = concatDir(root, to);
 
-    fs.renameSync(concatDir(root, from), concatDir(root, actualPlainRenameTo));
+    const toExceptLast = dirStringToArray(rootedTo);
+    toExceptLast.splice(-1, 1); // remove last item
 
-    fs.mkdirSync(concatDir(root, actualPlainRenameTo, directoriesToCreate), {
-        recursive: true,
-    });
+    fs.mkdirSync(dirArrayToString(toExceptLast), { recursive: true });
+    fs.renameSync(rootedFrom, rootedTo);
 }
 
 export function moveFile(root: string, from: string, to: string) {
