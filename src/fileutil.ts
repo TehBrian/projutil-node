@@ -12,29 +12,30 @@ export function concatDir(...dir: (string | string[])[]): string {
         allDirs = allDirs.concat(arrayDir);
     }
 
-    const preserveRootSlash: boolean =
-        typeof dir[0] === "string" && dir[0].charAt(0) === "/";
-
-    if (preserveRootSlash) {
-        return "/" + dirArrayToString(allDirs);
-    } else {
-        return dirArrayToString(allDirs);
-    }
+    return dirArrayToString(allDirs);
 }
 
-export const dirStringToArray = (dir: string): string[] =>
-    dir.split("/").filter((e) => e);
-export const dirArrayToString = (dir: string[]): string =>
-    dir.filter((e) => e).join("/");
+export const dirStringToArray = (dir: string): string[] => {
+    const dirAsArray: string[] = dir.split("/").filter((e) => e);
 
-// TODO: clean this up
-export function renameFolder(root: string, from: string, to: string) {
-    const splitFrom: string[] = from.split("/").filter((e) => e);
-    const splitTo: string[] = to.split("/").filter((e) => e);
+    // preserve root slash
+    if (dir.charAt(0) === "/") {
+        dirAsArray.unshift("/"); // adds "/" as an element to start of array
+    }
 
-    const fromDirectoryCount: number = splitFrom.length;
-    const toYknow: string[] = [...splitTo];
-    toYknow.splice(0, fromDirectoryCount - 1); // get rid of dirs matching from length
+    return dirAsArray;
+};
+
+export const dirArrayToString = (dir: string[]): string => {
+    const dirAsString = dir.filter((e) => e).join("/");
+
+    // remove double root slash due to .join
+    if (dir[0] === "/") {
+        return dirAsString.substring(1);
+    }
+
+    return dirAsString;
+}
 
     const plainRenameTo: string[] = [...splitFrom];
     plainRenameTo.splice(-1, 1); /*remove last item*/
