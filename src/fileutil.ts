@@ -35,7 +35,7 @@ export const dirArrayToString = (dir: string[]): string => {
     }
 
     return dirAsString;
-}
+};
 
 export function renameFolder(root: string, from: string, to: string) {
     const rootedFrom: string = concatDir(root, from);
