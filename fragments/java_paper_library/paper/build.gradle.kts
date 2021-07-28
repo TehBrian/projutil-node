@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":myproject-core"))
+    api(project(":@ROOT_PROJECT_NAME@-core"))
 
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 }
