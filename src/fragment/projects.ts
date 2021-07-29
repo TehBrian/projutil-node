@@ -14,7 +14,7 @@ export class JavaPaperPlugin extends FileFragment {
     constructor() {
         super(
             "JavaPaperPlugin",
-            "A blank Gradle project, using the Kotlin DSL, configured for Paper plugin development.",
+            "A Gradle Kotlin DSL project configured for Paper plugin development.",
             "java_paper_plugin"
         );
     }
@@ -115,7 +115,7 @@ export class JavaPaperLibrary extends FileFragment {
     constructor() {
         super(
             "JavaPaperLibrary",
-            "A blank Gradle project, using the Kotlin DSL, configured to be a multi-module library.",
+            "A Gradle Kotlin DSL project configured to be a multi-module library.",
             "java_paper_library"
         );
     }
