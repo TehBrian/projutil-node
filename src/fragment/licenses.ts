@@ -14,7 +14,7 @@ export class License extends Fragment {
             {
                 type: "select",
                 name: "licenseType",
-                message: "What license would you like to use?",
+                message: "License Type",
                 choices: [{ title: "MIT", value: "MIT" }],
             },
         ];
@@ -37,7 +37,7 @@ export class MitLicense extends FileFragment {
             {
                 type: "text",
                 name: "licenseHolder",
-                message: "What should the name on the license be?",
+                message: "License Holder",
             },
         ];
 

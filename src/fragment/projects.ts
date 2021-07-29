@@ -7,6 +7,7 @@ import {
     replaceTokensMap,
 } from "../fileutil";
 import { FileFragment, FragmentOptions, fragments } from "./fragment";
+import { Questions } from "./questions";
 
 const prompts = require("prompts");
 
@@ -21,47 +22,13 @@ export class JavaPaperPlugin extends FileFragment {
 
     async prompt(options: FragmentOptions) {
         const questions = [
-            {
-                type: "text",
-                name: "projectName",
-                message: "What's the project name?",
-            },
-            {
-                type: "text",
-                name: "projectGroup",
-                message: "What's the project group?",
-                format: (val: string) => val.toLowerCase(),
-            },
-            {
-                type: "text",
-                name: "projectVersion",
-                message: "What's the project version?",
-                initial: "0.1.0",
-            },
-            {
-                type: "text",
-                name: "projectDescription",
-                message: "What's the project description?",
-            },
-            {
-                type: "text",
-                name: "projectAuthor",
-                message: "Who's the project author?",
-            },
-            {
-                type: "text",
-                name: "projectWebsite",
-                message: "What's the project website?",
-                initial: "https://github.com/",
-            },
-            {
-                type: "toggle",
-                name: "license",
-                message: "Do you want to add a license?",
-                initial: true,
-                active: "yes",
-                inactive: "no",
-            },
+            Questions.projectName,
+            Questions.projectGroup,
+            Questions.projectVersion,
+            Questions.projectDescription,
+            Questions.projectAuthor,
+            Questions.projectWebsite,
+            Questions.license,
         ];
 
         const response = await prompts(questions, { onCancel });
@@ -122,33 +89,11 @@ export class JavaPaperLibrary extends FileFragment {
 
     async prompt(options: FragmentOptions) {
         const questions = [
-            {
-                type: "text",
-                name: "projectName",
-                message: "Project Name",
-            },
-            {
-                type: "text",
-                name: "projectGroup",
-                message: "Project Group",
-                format: (val: string) => val.toLowerCase(),
-            },
-            {
-                type: "text",
-                name: "projectVersion",
-                message: "Project Version",
-                initial: "0.1.0",
-            },
-            {
-                type: "text",
-                name: "projectDescription",
-                message: "Project Description",
-            },
-            {
-                type: "text",
-                name: "projectAuthor",
-                message: "Project Author",
-            },
+            Questions.projectName,
+            Questions.projectGroup,
+            Questions.projectVersion,
+            Questions.projectDescription,
+            Questions.projectAuthor,
             {
                 type: "text",
                 name: "projectGitRepo",
@@ -156,9 +101,7 @@ export class JavaPaperLibrary extends FileFragment {
                 initial: "https://github.com/",
             },
             {
-                type: "text",
-                name: "projectWebsite",
-                message: "Project Website",
+                ...Questions.projectWebsite,
                 initial: (prev: string) => prev,
             },
             {
@@ -179,14 +122,7 @@ export class JavaPaperLibrary extends FileFragment {
                 name: "developerEmail",
                 message: "Developer Email",
             },
-            {
-                type: "toggle",
-                name: "license",
-                message: "License?",
-                initial: true,
-                active: "yes",
-                inactive: "no",
-            },
+            Questions.license,
         ];
 
         const response = await prompts(questions, { onCancel });
