@@ -1,6 +1,7 @@
 const replace = require("replace-in-file");
 const fs = require("fs-extra");
 const util = require("util");
+const path = require("path");
 
 export function concatDir(...dir: (string | string[])[]): string {
     var allDirs: string[] = [];
@@ -16,21 +17,21 @@ export function concatDir(...dir: (string | string[])[]): string {
 }
 
 export function dirStringToArray(dir: string): string[] {
-    const dirAsArray: string[] = dir.split("/").filter((e) => e);
+    const dirAsArray: string[] = dir.split(path.sep).filter((e) => e);
 
     // preserve root slash
-    if (dir.charAt(0) === "/") {
-        dirAsArray.unshift("/"); // adds "/" as an element to start of array
+    if (dir.charAt(0) === path.sep) {
+        dirAsArray.unshift(path.sep); // adds "/" (or "\" on windows) as an element to start of array
     }
 
     return dirAsArray;
 }
 
 export function dirArrayToString(dir: string[]): string {
-    const dirAsString = dir.filter((e) => e).join("/");
+    const dirAsString = dir.filter((e) => e).join(path.sep);
 
     // remove double root slash due to .join
-    if (dir[0] === "/") {
+    if (dir[0] === path.sep) {
         return dirAsString.substring(1);
     }
 
@@ -96,5 +97,5 @@ export function replaceTokensMap(
     );
 }
 
-export const packageToDirectory = (s: string) => s.replaceAll(/\./g, "/");
-export const directoryToPackage = (s: string) => s.replaceAll(/\//g, ".");
+export const packageToDirectory = (s: string) => s.replaceAll(/\./g, path.sep);
+export const directoryToPackage = (s: string) => s.replaceAll(new RegExp(path.sep, "g"), ".");
