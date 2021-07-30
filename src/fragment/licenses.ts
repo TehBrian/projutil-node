@@ -8,9 +8,9 @@ import {
 } from "./fragment";
 const prompts = require("prompts");
 
-export class License extends Fragment {
+export class Licenses extends Fragment {
     constructor() {
-        super("license", "A list of licenses.");
+        super("licenses", "A list of licenses.");
     }
 
     async prompt(options: FragmentOptions): Promise<{ licenseType: string }> {
@@ -32,7 +32,7 @@ export class License extends Fragment {
     ): Promise<void> {
         if (data.licenseType === "MIT") {
             await registeredFragments
-                .get("MitLicense")!
+                .get("mit_license")!
                 .traceWithPrompt(options);
         }
     }

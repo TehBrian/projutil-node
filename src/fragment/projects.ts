@@ -89,14 +89,14 @@ export class JavaPaperPlugin extends FileFragment {
             mainClassName
         );
 
-        await registeredFragments.get("Editorconfig")?.traceWithPrompt(options);
-        await registeredFragments.get("Checkstyle")?.traceWithPrompt(options);
+        await registeredFragments.get("editorconfig")?.traceWithPrompt(options);
+        await registeredFragments.get("checkstyle")?.traceWithPrompt(options);
         await registeredFragments
-            .get("JavaGitignore")
+            .get("java_gitignore")
             ?.traceWithPrompt(options);
 
         if (data.license) {
-            await registeredFragments.get("License")?.traceWithPrompt(options);
+            await registeredFragments.get("licenses")?.traceWithPrompt(options);
         }
     }
 }
@@ -223,14 +223,14 @@ export class JavaPaperLibrary extends FileFragment {
             rootProjectName + ".java-conventions.gradle.kts"
         );
 
-        await registeredFragments.get("Editorconfig")?.traceWithPrompt(options);
-        await registeredFragments.get("Checkstyle")?.traceWithPrompt(options);
+        await registeredFragments.get("editorconfig")?.traceWithPrompt(options);
+        await registeredFragments.get("checkstyle")?.traceWithPrompt(options);
         await registeredFragments
-            .get("JavaGitignore")
+            .get("java_gitignore")
             ?.traceWithPrompt(options);
 
         if (data.license) {
-            await registeredFragments.get("License")?.traceWithPrompt(options);
+            await registeredFragments.get("licenses")?.traceWithPrompt(options);
         }
     }
 }
