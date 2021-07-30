@@ -1,6 +1,5 @@
 import { fragmentsFolder } from "../files";
 import { concatDir } from "../fileutil";
-
 const fs = require("fs-extra");
 
 export const fragments: Map<string, Fragment> = new Map();

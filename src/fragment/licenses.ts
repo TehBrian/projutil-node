@@ -1,7 +1,6 @@
 import { onCancel } from "..";
 import { replaceTokensMap } from "../fileutil";
 import { FileFragment, Fragment, FragmentOptions, fragments } from "./fragment";
-
 const prompts = require("prompts");
 
 export class License extends Fragment {

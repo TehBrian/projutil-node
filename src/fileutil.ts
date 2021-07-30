@@ -1,7 +1,7 @@
-const replace = require("replace-in-file");
+import * as replace from "replace-in-file";
+import * as util from "util";
+import * as path from "path";
 const fs = require("fs-extra");
-const util = require("util");
-const path = require("path");
 
 export function concatDir(...dir: (string | string[])[]): string {
     var allDirs: string[] = [];
@@ -98,4 +98,5 @@ export function replaceTokensMap(
 }
 
 export const packageToDirectory = (s: string) => s.replaceAll(/\./g, path.sep);
-export const directoryToPackage = (s: string) => s.replaceAll(new RegExp(path.sep, "g"), ".");
+export const directoryToPackage = (s: string) =>
+    s.replaceAll(new RegExp(path.sep, "g"), ".");

@@ -5,9 +5,8 @@ import { Fragment, fragments, registerFragment } from "./fragment/fragment";
 import { License, MitLicense } from "./fragment/licenses";
 import { JavaPaperLibrary, JavaPaperPlugin } from "./fragment/projects";
 import { Checkstyle, Editorconfig, JavaGitignore } from "./fragment/extras";
-
-const chalk = require("chalk");
-const program = require("commander");
+import chalk from "chalk";
+import { Command } from "commander";
 
 export function registerDefaultFragments(): void {
     registerFragment(new JavaPaperPlugin());
@@ -36,6 +35,7 @@ process.on("exit", function () {
     console.debug(chalk.magenta("Until next time! <3"));
 });
 
+const program = new Command();
 program.version("1.0.0");
 
 program
