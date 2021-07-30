@@ -1,6 +1,11 @@
 import { onCancel } from "..";
 import { replaceTokensMap } from "../fileutil";
-import { FileFragment, Fragment, FragmentOptions, fragments } from "./fragment";
+import {
+    FileFragment,
+    Fragment,
+    FragmentOptions,
+    registeredFragments,
+} from "./fragment";
 const prompts = require("prompts");
 
 export class License extends Fragment {
@@ -8,7 +13,7 @@ export class License extends Fragment {
         super("License", "A list of licenses.");
     }
 
-    async prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions): Promise<{ licenseType: string }> {
         const questions = [
             {
                 type: "select",
@@ -18,10 +23,17 @@ export class License extends Fragment {
             },
         ];
 
-        const response = await prompts(questions, { onCancel });
+        return await prompts(questions, { onCancel });
+    }
 
-        if (response.licenseType === "MIT") {
-            await fragments.get("MitLicense")!.prompt(options);
+    async trace(
+        options: FragmentOptions,
+        data: { licenseType: string }
+    ): Promise<void> {
+        if (data.licenseType === "MIT") {
+            await registeredFragments
+                .get("MitLicense")!
+                .traceWithPrompt(options);
         }
     }
 }
@@ -31,7 +43,7 @@ export class MitLicense extends FileFragment {
         super("MitLicense", "The MIT license.", "mit_license");
     }
 
-    async prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions): Promise<{ licenseHolder: string }> {
         const questions = [
             {
                 type: "text",
@@ -40,15 +52,20 @@ export class MitLicense extends FileFragment {
             },
         ];
 
-        const response = await prompts(questions, { onCancel });
+        return await prompts(questions, { onCancel });
+    }
 
+    async trace(
+        options: FragmentOptions,
+        data: { licenseHolder: string }
+    ): Promise<void> {
         this.copyFiles(options.directory);
 
         replaceTokensMap(
             options.directory,
             new Map([
                 ["LICENSE_YEAR", new Date().getFullYear().toString()],
-                ["LICENSE_HOLDER", response.licenseHolder],
+                ["LICENSE_HOLDER", data.licenseHolder],
             ])
         );
     }

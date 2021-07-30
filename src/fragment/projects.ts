@@ -6,7 +6,7 @@ import {
     renameFolder,
     replaceTokensMap,
 } from "../fileutil";
-import { FileFragment, FragmentOptions, fragments } from "./fragment";
+import { FileFragment, FragmentOptions, registeredFragments } from "./fragment";
 import { Questions } from "./questions";
 
 const prompts = require("prompts");
@@ -20,7 +20,15 @@ export class JavaPaperPlugin extends FileFragment {
         );
     }
 
-    async prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions): Promise<{
+        projectName: string;
+        projectGroup: string;
+        projectVersion: string;
+        projectDescription: string;
+        projectAuthor: string;
+        projectWebsite: string;
+        license: boolean;
+    }> {
         const questions = [
             Questions.projectName,
             Questions.projectGroup,
@@ -31,30 +39,43 @@ export class JavaPaperPlugin extends FileFragment {
             Questions.license,
         ];
 
-        const response = await prompts(questions, { onCancel });
+        return await prompts(questions, { onCancel });
+    }
 
+    async trace(
+        options: FragmentOptions,
+        data: {
+            projectName: string;
+            projectGroup: string;
+            projectVersion: string;
+            projectDescription: string;
+            projectAuthor: string;
+            projectWebsite: string;
+            license: boolean;
+        }
+    ): Promise<void> {
         this.copyFiles(options.directory);
 
-        const rootProjectName: string = response.projectName.toLowerCase();
+        const rootProjectName: string = data.projectName.toLowerCase();
         const projectPackage: string =
-            response.projectGroup + "." + rootProjectName;
+            data.projectGroup + "." + rootProjectName;
 
         replaceTokensMap(
             options.directory,
             new Map([
                 ["ROOT_PROJECT_NAME", rootProjectName],
-                ["PROJECT_NAME", response.projectName],
-                ["PROJECT_GROUP", response.projectGroup],
-                ["PROJECT_VERSION", response.projectVersion],
-                ["PROJECT_DESCRIPTION", response.projectDescription],
-                ["PROJECT_AUTHOR", response.projectAuthor],
-                ["PROJECT_WEBSITE", response.projectWebsite],
+                ["PROJECT_NAME", data.projectName],
+                ["PROJECT_GROUP", data.projectGroup],
+                ["PROJECT_VERSION", data.projectVersion],
+                ["PROJECT_DESCRIPTION", data.projectDescription],
+                ["PROJECT_AUTHOR", data.projectAuthor],
+                ["PROJECT_WEBSITE", data.projectWebsite],
                 ["PROJECT_PACKAGE", projectPackage],
             ])
         );
 
         const packageAsDirectory: string = packageToDirectory(projectPackage);
-        const mainClassName: string = response.projectName + ".java";
+        const mainClassName: string = data.projectName + ".java";
 
         renameFolder(
             concatDir(options.directory, "src/main/java"),
@@ -68,12 +89,14 @@ export class JavaPaperPlugin extends FileFragment {
             mainClassName
         );
 
-        await fragments.get("Editorconfig")?.prompt(options);
-        await fragments.get("Checkstyle")?.prompt(options);
-        await fragments.get("JavaGitignore")?.prompt(options);
+        await registeredFragments.get("Editorconfig")?.traceWithPrompt(options);
+        await registeredFragments.get("Checkstyle")?.traceWithPrompt(options);
+        await registeredFragments
+            .get("JavaGitignore")
+            ?.traceWithPrompt(options);
 
-        if (response.license) {
-            await fragments.get("License")?.prompt(options);
+        if (data.license) {
+            await registeredFragments.get("License")?.traceWithPrompt(options);
         }
     }
 }
@@ -87,7 +110,19 @@ export class JavaPaperLibrary extends FileFragment {
         );
     }
 
-    async prompt(options: FragmentOptions) {
+    async prompt(options: FragmentOptions): Promise<{
+        projectName: string;
+        projectGroup: string;
+        projectVersion: string;
+        projectDescription: string;
+        projectAuthor: string;
+        projectGitRepo: string;
+        projectWebsite: string;
+        developerName: string;
+        developerUrl: string;
+        developerEmail: string;
+        license: boolean;
+    }> {
         const questions = [
             Questions.projectName,
             Questions.projectGroup,
@@ -125,29 +160,46 @@ export class JavaPaperLibrary extends FileFragment {
             Questions.license,
         ];
 
-        const response = await prompts(questions, { onCancel });
+        return await prompts(questions, { onCancel });
+    }
 
+    async trace(
+        options: FragmentOptions,
+        data: {
+            projectName: string;
+            projectGroup: string;
+            projectVersion: string;
+            projectDescription: string;
+            projectAuthor: string;
+            projectWebsite: string;
+            projectGitRepo: string;
+            developerName: string;
+            developerUrl: string;
+            developerEmail: string;
+            license: boolean;
+        }
+    ): Promise<void> {
         this.copyFiles(options.directory);
 
-        const rootProjectName: string = response.projectName.toLowerCase();
+        const rootProjectName: string = data.projectName.toLowerCase();
         const projectPackage: string =
-            response.projectGroup + "." + rootProjectName;
+            data.projectGroup + "." + rootProjectName;
 
         replaceTokensMap(
             options.directory,
             new Map([
                 ["ROOT_PROJECT_NAME", rootProjectName],
-                ["PROJECT_NAME", response.projectName],
-                ["PROJECT_GROUP", response.projectGroup],
-                ["PROJECT_VERSION", response.projectVersion],
-                ["PROJECT_DESCRIPTION", response.projectDescription],
-                ["PROJECT_AUTHOR", response.projectAuthor],
-                ["PROJECT_WEBSITE", response.projectWebsite],
-                ["PROJECT_GIT_REPO", response.projectGitRepo],
+                ["PROJECT_NAME", data.projectName],
+                ["PROJECT_GROUP", data.projectGroup],
+                ["PROJECT_VERSION", data.projectVersion],
+                ["PROJECT_DESCRIPTION", data.projectDescription],
+                ["PROJECT_AUTHOR", data.projectAuthor],
+                ["PROJECT_WEBSITE", data.projectWebsite],
+                ["PROJECT_GIT_REPO", data.projectGitRepo],
                 ["PROJECT_PACKAGE", projectPackage],
-                ["DEVELOPER_NAME", response.developerName],
-                ["DEVELOPER_URL", response.developerUrl],
-                ["DEVELOPER_EMAIL", response.developerEmail],
+                ["DEVELOPER_NAME", data.developerName],
+                ["DEVELOPER_URL", data.developerUrl],
+                ["DEVELOPER_EMAIL", data.developerEmail],
             ])
         );
 
@@ -171,12 +223,14 @@ export class JavaPaperLibrary extends FileFragment {
             rootProjectName + ".java-conventions.gradle.kts"
         );
 
-        await fragments.get("Editorconfig")?.prompt(options);
-        await fragments.get("Checkstyle")?.prompt(options);
-        await fragments.get("JavaGitignore")?.prompt(options);
+        await registeredFragments.get("Editorconfig")?.traceWithPrompt(options);
+        await registeredFragments.get("Checkstyle")?.traceWithPrompt(options);
+        await registeredFragments
+            .get("JavaGitignore")
+            ?.traceWithPrompt(options);
 
-        if (response.license) {
-            await fragments.get("License")?.prompt(options);
+        if (data.license) {
+            await registeredFragments.get("License")?.traceWithPrompt(options);
         }
     }
 }

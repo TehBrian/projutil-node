@@ -5,7 +5,7 @@ export class Checkstyle extends FileFragment {
         super("Checkstyle", "A checkstyle.", "checkstyle");
     }
 
-    async prompt(options: FragmentOptions) {
+    async trace(options: FragmentOptions, data: {}): Promise<void> {
         this.copyFiles(options.directory);
     }
 }
@@ -15,7 +15,7 @@ export class Editorconfig extends FileFragment {
         super("Editorconfig", "An editorconfig.", "editorconfig");
     }
 
-    async prompt(options: FragmentOptions) {
+    async trace(options: FragmentOptions, data: {}): Promise<void> {
         this.copyFiles(options.directory);
     }
 }
@@ -25,7 +25,7 @@ export class JavaGitignore extends FileFragment {
         super("JavaGitignore", "A gitignore for Java.", "java_gitignore");
     }
 
-    async prompt(options: FragmentOptions) {
+    async trace(options: FragmentOptions, data: {}): Promise<void> {
         this.copyFiles(options.directory);
     }
 }

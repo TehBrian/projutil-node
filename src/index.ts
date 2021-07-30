@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
 import { injectCustomLogging as injectCustomLogging } from "./logging";
-import { Fragment, fragments, registerFragment } from "./fragment/fragment";
+import {
+    Fragment,
+    registeredFragments,
+    registerFragment,
+} from "./fragment/fragment";
 import { License, MitLicense } from "./fragment/licenses";
 import { JavaPaperLibrary, JavaPaperPlugin } from "./fragment/projects";
 import { Checkstyle, Editorconfig, JavaGitignore } from "./fragment/extras";
@@ -54,7 +58,7 @@ program
         // verify that all fragments are there
         var fragmentsToRegister: Fragment[] = [];
         for (const item of fragment) {
-            const fragmentObject = fragments.get(item);
+            const fragmentObject = registeredFragments.get(item);
             if (fragmentObject === undefined) {
                 console.error(chalk.red(`The fragment ${item} doesn't exist.`));
                 printAvailableFragments();
@@ -65,7 +69,7 @@ program
 
         // prompt each fragment in order
         for (const fragmentObject of fragmentsToRegister) {
-            await fragmentObject.prompt({ directory });
+            await fragmentObject.traceWithPrompt({ directory });
             console.log(chalk.green(`Traced fragment ${fragmentObject.name}!`));
         }
 
@@ -81,7 +85,7 @@ program
 
 function printAvailableFragments() {
     console.log("The available fragments are:");
-    for (const fragment of fragments.values()) {
+    for (const fragment of registeredFragments.values()) {
         console.log(
             chalk.blue(fragment.name) +
                 " - " +
