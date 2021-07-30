@@ -58,9 +58,12 @@ program
         // verify that all fragments are there
         var fragmentsToRegister: Fragment[] = [];
         for (const item of fragment) {
-            const fragmentObject = registeredFragments.get(item);
+            const lowercaseItem = item.toLowerCase();
+            const fragmentObject = registeredFragments.get(lowercaseItem);
             if (fragmentObject === undefined) {
-                console.error(chalk.red(`The fragment ${item} doesn't exist.`));
+                console.error(
+                    chalk.red(`The fragment ${lowercaseItem} doesn't exist.`)
+                );
                 printAvailableFragments();
                 return;
             }
