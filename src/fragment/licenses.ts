@@ -10,7 +10,7 @@ const prompts = require("prompts");
 
 export class License extends Fragment {
     constructor() {
-        super("License", "A list of licenses.");
+        super("license", "A list of licenses.");
     }
 
     async prompt(options: FragmentOptions): Promise<{ licenseType: string }> {
@@ -40,7 +40,7 @@ export class License extends Fragment {
 
 export class MitLicense extends FileFragment {
     constructor() {
-        super("MitLicense", "The MIT license.", "mit_license");
+        super("mit_license", "The MIT license.", "mit_license");
     }
 
     async prompt(options: FragmentOptions): Promise<{ licenseHolder: string }> {

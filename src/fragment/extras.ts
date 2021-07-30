@@ -2,7 +2,7 @@ import { FileFragment, FragmentOptions } from "./fragment";
 
 export class Checkstyle extends FileFragment {
     constructor() {
-        super("Checkstyle", "A checkstyle.", "checkstyle");
+        super("checkstyle", "A checkstyle.", "checkstyle");
     }
 
     async trace(options: FragmentOptions, data: {}): Promise<void> {
@@ -12,7 +12,7 @@ export class Checkstyle extends FileFragment {
 
 export class Editorconfig extends FileFragment {
     constructor() {
-        super("Editorconfig", "An editorconfig.", "editorconfig");
+        super("editorconfig", "An editorconfig.", "editorconfig");
     }
 
     async trace(options: FragmentOptions, data: {}): Promise<void> {
@@ -22,7 +22,7 @@ export class Editorconfig extends FileFragment {
 
 export class JavaGitignore extends FileFragment {
     constructor() {
-        super("JavaGitignore", "A gitignore for Java.", "java_gitignore");
+        super("java_gitignore", "A gitignore for Java.", "java_gitignore");
     }
 
     async trace(options: FragmentOptions, data: {}): Promise<void> {

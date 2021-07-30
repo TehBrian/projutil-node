@@ -14,7 +14,7 @@ const prompts = require("prompts");
 export class JavaPaperPlugin extends FileFragment {
     constructor() {
         super(
-            "JavaPaperPlugin",
+            "java_paper_plugin",
             "A Gradle Kotlin DSL project configured for Paper plugin development.",
             "java_paper_plugin"
         );
@@ -104,7 +104,7 @@ export class JavaPaperPlugin extends FileFragment {
 export class JavaPaperLibrary extends FileFragment {
     constructor() {
         super(
-            "JavaPaperLibrary",
+            "java_paper_library",
             "A Gradle Kotlin DSL project configured to be a multi-module library.",
             "java_paper_library"
         );
