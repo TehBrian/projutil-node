@@ -89,6 +89,9 @@ export class JavaPaperPlugin extends FileFragment {
             mainClassName
         );
 
+        await registeredFragments
+            .get("gradle_wrapper")
+            ?.traceWithPrompt(options);
         await registeredFragments.get("editorconfig")?.traceWithPrompt(options);
         await registeredFragments.get("checkstyle")?.traceWithPrompt(options);
         await registeredFragments
@@ -223,6 +226,9 @@ export class JavaPaperLibrary extends FileFragment {
             rootProjectName + ".java-conventions.gradle.kts"
         );
 
+        await registeredFragments
+            .get("gradle_wrapper")
+            ?.traceWithPrompt(options);
         await registeredFragments.get("editorconfig")?.traceWithPrompt(options);
         await registeredFragments.get("checkstyle")?.traceWithPrompt(options);
         await registeredFragments
@@ -232,5 +238,15 @@ export class JavaPaperLibrary extends FileFragment {
         if (data.license) {
             await registeredFragments.get("licenses")?.traceWithPrompt(options);
         }
+    }
+}
+
+export class GradleWrapper extends FileFragment {
+    constructor() {
+        super("gradle_wrapper", "Just the Gradle wrapper.", "gradle_wrapper");
+    }
+
+    async trace(options: FragmentOptions, data: {}): Promise<void> {
+        this.copyFiles(options.directory);
     }
 }

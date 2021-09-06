@@ -7,7 +7,11 @@ import {
     registerFragment,
 } from "./fragment/fragment";
 import { Licenses, MitLicense } from "./fragment/licenses";
-import { JavaPaperLibrary, JavaPaperPlugin } from "./fragment/projects";
+import {
+    GradleWrapper,
+    JavaPaperLibrary,
+    JavaPaperPlugin,
+} from "./fragment/projects";
 import { Checkstyle, Editorconfig, JavaGitignore } from "./fragment/extras";
 import chalk from "chalk";
 import { Command } from "commander";
@@ -20,6 +24,7 @@ export function registerDefaultFragments(): void {
     registerFragment(new JavaGitignore());
     registerFragment(new Checkstyle());
     registerFragment(new Editorconfig());
+    registerFragment(new GradleWrapper());
 }
 
 registerDefaultFragments();
