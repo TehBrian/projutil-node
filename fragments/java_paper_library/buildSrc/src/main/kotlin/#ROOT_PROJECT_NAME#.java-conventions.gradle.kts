@@ -6,9 +6,9 @@ plugins {
     id("net.kyori.indra.publishing")
 }
 
-group = "@PROJECT_GROUP@"
-version = "@PROJECT_VERSION@"
-description = "@PROJECT_DESCRIPTION@"
+group = rootProject.group
+version = rootProject.version
+description = rootProject.description
 
 repositories {
     mavenCentral()
