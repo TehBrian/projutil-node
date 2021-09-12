@@ -61,7 +61,7 @@ program
             options.directory === undefined ? process.cwd() : options.directory;
 
         // verify that all fragments are there
-        var fragmentsToRegister: Fragment[] = [];
+        var fragmentsToTrace: Fragment[] = [];
         for (const item of fragment) {
             const lowercaseItem = item.toLowerCase();
             const fragmentObject = registeredFragments.get(lowercaseItem);
@@ -72,11 +72,11 @@ program
                 printAvailableFragments();
                 return;
             }
-            fragmentsToRegister.push(fragmentObject);
+            fragmentsToTrace.push(fragmentObject);
         }
 
         // prompt each fragment in order
-        for (const fragmentObject of fragmentsToRegister) {
+        for (const fragmentObject of fragmentsToTrace) {
             await fragmentObject.traceWithPrompt({ directory });
             console.log(chalk.green(`Traced fragment ${fragmentObject.name}!`));
         }
