@@ -13,17 +13,14 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        name = "papermc-repo"
-        url = uri("https://papermc.io/repo/repository/maven-public/")
+    maven("https://papermc.io/repo/repository/maven-public/") {
+        name = "papermc"
     }
-    maven {
+    maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
-        url = uri("https://oss.sonatype.org/content/groups/public/")
     }
-    maven {
+    maven("https://s01.oss.sonatype.org/content/groups/public/") {
         name = "sonatype-s01"
-        url = uri("https://s01.oss.sonatype.org/content/groups/public/")
     }
 }
 
@@ -31,10 +28,12 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 }
 
-tasks.processResources {
-    expand("version" to project.version)
-}
+tasks {
+    processResources {
+        expand("version" to project.version)
+    }
 
-tasks.shadowJar {
-    archiveBaseName.set("@PROJECT_NAME@")
+    shadowJar {
+        archiveBaseName.set("@PROJECT_NAME@")
+    }
 }

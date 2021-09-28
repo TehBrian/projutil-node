@@ -3,8 +3,8 @@ plugins {
 }
 
 repositories {
-    maven {
-        url = uri("https://papermc.io/repo/repository/maven-public/")
+    maven("https://papermc.io/repo/repository/maven-public/") {
+        name = "papermc"
     }
 }
 
