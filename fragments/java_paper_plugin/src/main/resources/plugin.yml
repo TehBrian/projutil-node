@@ -1,5 +1,5 @@
 name: @PROJECT_NAME@
-description: @PROJECT_DESCRIPTION@
+description: ${description}
 authors: [ @PROJECT_AUTHOR@ ]
 website: @PROJECT_WEBSITE@
 

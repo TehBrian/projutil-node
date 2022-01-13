@@ -5,6 +5,7 @@ plugins {
 
 group = "@PROJECT_GROUP@"
 version = "@PROJECT_VERSION@"
+description = "@PROJECT_DESCRIPTION@"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_16
@@ -30,7 +31,7 @@ dependencies {
 
 tasks {
     processResources {
-        expand("version" to project.version)
+        expand("version" to project.version, "description" to project.description)
     }
 
     shadowJar {
