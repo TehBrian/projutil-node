@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
 group = "@PROJECT_GROUP@"
@@ -29,5 +30,9 @@ tasks {
 
     shadowJar {
         archiveBaseName.set("@PROJECT_NAME@")
+    }
+
+    runServer {
+        minecraftVersion("1.18.1")
     }
 }
