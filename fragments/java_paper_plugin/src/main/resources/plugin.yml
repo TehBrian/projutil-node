@@ -5,4 +5,4 @@ website: @PROJECT_WEBSITE@
 
 version: ${version}
 main: @PROJECT_PACKAGE@.@PROJECT_NAME@
-api-version: 1.17
+api-version: 1.18
