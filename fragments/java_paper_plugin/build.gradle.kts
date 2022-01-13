@@ -8,8 +8,7 @@ version = "@PROJECT_VERSION@"
 description = "@PROJECT_DESCRIPTION@"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
