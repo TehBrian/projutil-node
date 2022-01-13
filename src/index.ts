@@ -8,7 +8,6 @@ import {
 } from "./fragment/fragment";
 import { Licenses, MitLicense } from "./fragment/licenses";
 import {
-    GradleWrapper,
     JavaPaperLibrary,
     JavaPaperPlugin,
 } from "./fragment/projects";
@@ -24,7 +23,6 @@ export function registerDefaultFragments(): void {
     registerFragment(new JavaGitignore());
     registerFragment(new Checkstyle());
     registerFragment(new Editorconfig());
-    registerFragment(new GradleWrapper());
 }
 
 registerDefaultFragments();

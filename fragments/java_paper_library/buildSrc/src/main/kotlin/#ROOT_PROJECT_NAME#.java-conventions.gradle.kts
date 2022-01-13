@@ -14,13 +14,9 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation("org.slf4j:slf4j-api:2.0.0-alpha5")
-}
-
 indra {
     javaVersions {
-        target(16)
+        target(17)
     }
 
     mitLicense()
