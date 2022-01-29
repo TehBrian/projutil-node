@@ -27,7 +27,7 @@
   "homepage": "https://github.com/TehBrian/projutil#readme",
   "dependencies": {
     "chalk": "^5.0.0",
-    "commander": "^8.0.0",
+    "commander": "^9.0.0",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
     "prompts": "^2.4.1",
