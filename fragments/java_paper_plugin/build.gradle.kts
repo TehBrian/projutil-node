@@ -36,6 +36,9 @@ tasks {
     shadowJar {
         archiveBaseName.set("@PROJECT_NAME@")
         archiveClassifier.set("")
+
+        val libsPackage = "${project.group}.${project.name}.libs"
+        relocate("the.developer.epiclib", "$libsPackage.epiclib")
     }
 
     runServer {
