@@ -25,12 +25,17 @@ dependencies {
 }
 
 tasks {
+    assemble {
+        dependsOn(shadowJar)
+    }
+
     processResources {
         expand("version" to project.version, "description" to project.description)
     }
 
     shadowJar {
         archiveBaseName.set("@PROJECT_NAME@")
+        archiveClassifier.set("")
     }
 
     runServer {
