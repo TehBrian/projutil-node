@@ -1,2 +1,2 @@
 # projutil
-A CLI tool which generates and updates project files.
+A CLI tool that generates and updates project files.
