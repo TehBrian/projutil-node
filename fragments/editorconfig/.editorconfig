@@ -7,10 +7,9 @@ end_of_line = lf
 indent_style = space
 indent_size = 4
 
+max_line_length = 120
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-max_line_length = 120
 
 ij_continuation_indent_size = 8
 ij_formatter_off_tag = @formatter:off
@@ -22,7 +21,6 @@ ij_visual_guides = 80, 120
 
 [*.conf]
 indent_size = 2
-ij_continuation_indent_size = 2
 
 ij_hocon_keep_blank_lines_before_right_brace = 2
 ij_hocon_keep_indents_on_empty_lines = false
@@ -36,6 +34,8 @@ ij_hocon_spaces_within_brackets = false
 ij_hocon_spaces_within_method_call_parentheses = false
 
 [*.css]
+indent_size = 2
+
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
 ij_css_blank_lines_between_blocks = 1
@@ -55,8 +55,6 @@ ij_css_use_double_quotes = true
 ij_css_value_alignment = do_not_align
 
 [*.java]
-max_line_length = 140
-
 ij_java_align_consecutive_assignments = false
 ij_java_align_consecutive_variable_declarations = false
 ij_java_align_group_field_declarations = false
@@ -290,9 +288,6 @@ ij_java_wrap_first_method_in_call_chain = true
 ij_java_wrap_long_lines = false
 
 [*.nbtt]
-max_line_length = 150
-ij_continuation_indent_size = 4
-
 ij_nbtt_keep_indents_on_empty_lines = false
 ij_nbtt_space_after_colon = true
 ij_nbtt_space_after_comma = true
@@ -376,8 +371,6 @@ ij_xml_space_inside_empty_tag = false
 ij_xml_text_wrap = normal
 
 [{*.ats, *.ts}]
-ij_continuation_indent_size = 4
-
 ij_typescript_align_imports = false
 ij_typescript_align_multiline_array_initializer_expression = false
 ij_typescript_align_multiline_binary_operation = false
@@ -555,8 +548,6 @@ ij_shell_switch_cases_indented = false
 ij_shell_use_unix_line_separator = true
 
 [{*.cjs, *.js}]
-ij_continuation_indent_size = 4
-
 ij_javascript_align_imports = false
 ij_javascript_align_multiline_array_initializer_expression = false
 ij_javascript_align_multiline_binary_operation = false
@@ -1027,8 +1018,6 @@ ij_html_text_wrap = normal
 ij_html_uniform_ident = false
 
 [{*.markdown, *.md}]
-max_line_length = 80
-
 ij_markdown_force_one_space_after_blockquote_symbol = true
 ij_markdown_force_one_space_after_header_symbol = true
 ij_markdown_force_one_space_after_list_bullet = true
