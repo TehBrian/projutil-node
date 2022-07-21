@@ -5,13 +5,13 @@ charset = utf-8
 end_of_line = lf
 
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 max_line_length = 120
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-ij_continuation_indent_size = 8
+ij_continuation_indent_size = 4
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = false
@@ -20,8 +20,6 @@ ij_wrap_on_typing = false
 ij_visual_guides = 80, 120
 
 [*.conf]
-indent_size = 2
-
 ij_hocon_keep_blank_lines_before_right_brace = 2
 ij_hocon_keep_indents_on_empty_lines = false
 ij_hocon_keep_line_breaks = true
@@ -34,8 +32,6 @@ ij_hocon_spaces_within_brackets = false
 ij_hocon_spaces_within_method_call_parentheses = false
 
 [*.css]
-indent_size = 2
-
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
 ij_css_blank_lines_between_blocks = 1
@@ -303,8 +299,6 @@ ij_properties_key_value_delimiter = equals
 ij_properties_spaces_around_key_value_delimiter = false
 
 [*.sass]
-indent_size = 2
-
 ij_sass_align_closing_brace_with_properties = false
 ij_sass_blank_lines_around_nested_selector = 1
 ij_sass_blank_lines_between_blocks = 1
@@ -324,8 +318,6 @@ ij_sass_use_double_quotes = true
 ij_sass_value_alignment = 0
 
 [*.scss]
-indent_size = 2
-
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
 ij_scss_blank_lines_between_blocks = 1
@@ -538,8 +530,6 @@ ij_typescript_while_on_new_line = false
 ij_typescript_wrap_comments = false
 
 [{*.bash, *.sh, *.zsh}]
-indent_size = 2
-
 ij_shell_binary_ops_start_line = false
 ij_shell_keep_column_alignment_padding = false
 ij_shell_minify_program = false
@@ -976,8 +966,6 @@ ij_kotlin_wrap_expression_body_functions = 0
 ij_kotlin_wrap_first_method_in_call_chain = false
 
 [{*.har, *.json}]
-indent_size = 2
-
 ij_json_keep_blank_lines_in_code = 0
 ij_json_keep_indents_on_empty_lines = false
 ij_json_keep_line_breaks = true
@@ -1031,8 +1019,6 @@ ij_markdown_min_lines_around_header = 1
 ij_markdown_min_lines_between_paragraphs = 1
 
 [{*.yaml, *.yml}]
-indent_size = 2
-
 ij_yaml_align_values_properties = do_not_align
 ij_yaml_autoinsert_sequence_marker = true
 ij_yaml_block_mapping_on_new_line = false
