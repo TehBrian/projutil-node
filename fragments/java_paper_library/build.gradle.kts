@@ -1,5 +1,5 @@
 plugins {
-    id("net.kyori.indra.publishing.sonatype") version "2.2.0"
+    id("net.kyori.indra.publishing.sonatype") version "3.0.1"
 }
 
 group = "@PROJECT_GROUP@"
